@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Estacionamiento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🚗 Gestión de Estacionamiento</h1>
+
+    <!-- Sección  de registrar carros -->
+    <div class="card">
+        <h2>Registrar Carro</h2>
+        <form id="carroForm" class="formulario">
+            <div class="campo">
+                <label>ID:</label>
+                <input type="number" id="id" required>
+            </div>
+            <div class="campo">
+                <label>Placa:</label>
+                <input type="text" id="placa" required>
+            </div>
+            <div class="campo">
+                <label>Marca:</label>
+                <input type="text" id="marca" required>
+            </div>
+            <div class="campo">
+                <label>Color:</label>
+                <input type="text" id="color" required>
+            </div>
+            <div class="campo campo-doble">
+                <label>Hora Entrada:</label>
+                <input type="text" id="horaEntrada" required>
+            </div>
+            <button type="submit" class="btn">Registrar</button>
+        </form>
+        <div id="respuestaCarro" class="resultado"></div>
+    </div>
+
+    <!-- Sección para agregar lugar -->
+    <div class="card">
+        <h2>Agregar Lugar</h2>
+        <form id="lugarForm" class="formulario">
+            <div class="campo">
+                <label>ID Lugar:</label>
+                <input type="number" id="idLugar" required>
+            </div>
+            <div class="campo">
+                <label>Número:</label>
+                <input type="text" id="numero" required>
+            </div>
+            <button type="submit" class="btn">Agregar</button>
+        </form>
+        <div id="respuestaLugar" class="resultado"></div>
+    </div>
+
+    <!-- Sección operaciones rápidas -->
+    <div class="card">
+        <h2>Operaciones rápidas</h2>
+        <div class="botones">
+            <button onclick="ocuparLugar()" class="btn">Ocupar Lugar</button>
+            <button onclick="liberarLugar()" class="btn">Liberar Lugar</button>
+            <button onclick="atenderCola()" class="btn">Atender Cola</button>
+            <button onclick="verHistorial()" class="btn">Ver Historial</button>
+        </div>
+        <div id="respuestaOperacion" class="resultado"></div>
+    </div>
+</div>
+
+<script>
+    // Registrar carro
+    const carroForm = document.getElementById("carroForm");
+    carroForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const datos = {
+            id: parseInt(document.getElementById("id").value),
+            placa: document.getElementById("placa").value,
+            marca: document.getElementById("marca").value,
+            color: document.getElementById("color").value,
+            horaEntrada: document.getElementById("horaEntrada").value
+        };
+        const respuesta = await fetch("/estacionamiento/carros", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(datos)
+        });
+        const texto = await respuesta.text();
+        document.getElementById("respuestaCarro").textContent = texto;
+        carroForm.reset(); // limpia el formulario
+    });
+
+    // Agregar lugar
+    const lugarForm = document.getElementById("lugarForm");
+    lugarForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const datos = {
+            id: parseInt(document.getElementById("idLugar").value),
+            numero: document.getElementById("numero").value,
+            ocupado: false,
+            idCarro: 0
+        };
+        const respuesta = await fetch("/estacionamiento/lugares", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(datos)
+        });
+        const texto = await respuesta.text();
+        document.getElementById("respuestaLugar").textContent = texto;
+        lugarForm.reset(); // limpia el formulario
+    });
+
+    // Ocupar lugar
+    async function ocuparLugar() {
+        const respuesta = await fetch("/estacionamiento/ocupar?idLugar=1&idCarro=1", { method: "POST" });
+        document.getElementById("respuestaOperacion").textContent = await respuesta.text();
+    }
+
+    // Liberar lugar
+    async function liberarLugar() {
+        const respuesta = await fetch("/estacionamiento/liberar?idLugar=1", { method: "POST" });
+        document.getElementById("respuestaOperacion").textContent = await respuesta.text();
+    }
+
+    // Atender cola
+    async function atenderCola() {
+        const respuesta = await fetch("/estacionamiento/atender-cola", { method: "POST" });
+        document.getElementById("respuestaOperacion").textContent = await respuesta.text();
+    }
+
+    // Ver historial
+    async function verHistorial() {
+        const respuesta = await fetch("/estacionamiento/historial");
+        document.getElementById("respuestaOperacion").textContent = await respuesta.text();
+    }
+</script>
+
+</body>
+</html>
+

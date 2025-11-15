@@ -1,0 +1,113 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 15px 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 6px solid #42a5f5;
+}
+
+.formulario label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #333;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 6px;
+    margin: 5px 0 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn {
+    background-color: #42a5f5;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.btn:hover {
+    background-color: #1e88e5;
+}
+
+.botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.resultado {
+    background: #f1f8e9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-style: italic;
+    border: 1px solid #c5e1a5;
+}
+.formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-doble {
+    grid-column: span 2;
+}
+
+.card button {
+    grid-column: span 2;
+    justify-self: start;
+}
+.formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-doble {
+    grid-column: span 2;
+}
+
+.card button {
+    grid-column: span 2;
+    justify-self: start;
+}
+
